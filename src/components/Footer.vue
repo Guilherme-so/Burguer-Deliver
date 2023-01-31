@@ -12,7 +12,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-top: 4px solid gainsboro;
+    border-top: 4px solid #FCBA03;
     bottom: 0;
     width: 100%;
 }

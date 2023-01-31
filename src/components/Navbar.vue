@@ -19,7 +19,7 @@ export default {
 <style scoped>
 #nav {
   background-color: #222;
-  border-bottom: 4px solid gainsboro;
+  border-bottom: 2px solid #FCBA03;
   padding: 15px 50px;
   display: flex;
   justify-content: flex-end;
