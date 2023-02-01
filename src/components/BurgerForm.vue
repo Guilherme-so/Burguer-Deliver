@@ -1,5 +1,10 @@
+<script setup>
+import Message from "./Message.vue";
+</script>
+
 <template>
   <div>
+    <Message :msg="msg" v-show="msg" />
     <div>
       <form id="burger-form" @submit="createBurger">
         <div class="input-container">
@@ -97,16 +102,23 @@ export default {
         status: "Solicitado",
       };
 
-      const request = await fetch("http://localhost:3000/burgers",{
-        method:"POST",
+      const request = await fetch("http://localhost:3000/burgers", {
+        method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(data)
-      })
+        body: JSON.stringify(data),
+      });
 
-      const res = await request.json()
+      const res = await request.json();
 
+      //message
+      this.msg = "Seu pedido foi enviado com Sucesso...";
+
+      //clear Message
+      setTimeout(() => {
+        this.msg = "";
+      }, 3000);
 
       this.nome = "";
       this.pao = "";
