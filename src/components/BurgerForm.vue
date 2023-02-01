@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <form id="burger-form">
+      <form id="burger-form" @submit="createBurger">
         <div class="input-container">
           <label for="nome">Nome do cliente:</label>
           <input
@@ -26,7 +26,7 @@
           <label for="carne">Escolha a sua carne:</label>
           <select name="carne" id="carne" v-model="carne">
             <option value="">Select sua carne:</option>
-            <option v-for="carne in carnes" :key="carne.id" value="carne.tipo">
+            <option v-for="carne in carnes" :key="carne.id" :value="carne.tipo">
               {{ carne.tipo }}
             </option>
           </select>
@@ -34,17 +34,20 @@
 
         <div id="optinais-container" class="input-container">
           <label id="optionais-title" for="opcionais"
-            >Selecione os opcionais:</label>
-          <div class="checkbox-container" v-for="opcional in opcionaisData" :key="opcional.id">
+            >Selecione os opcionais:</label
+          >
+          <div
+            class="checkbox-container"
+            v-for="opcional in opcionaisData"
+            :key="opcional.id"
+          >
             <input
               type="checkbox"
               name="opcionais"
-              value="opcional.tipo"
+              :value="opcional.tipo"
               v-model="opcionais"
-              />
-            <span>{{
-              opcional.tipo
-            }}</span>
+            />
+            <span>{{ opcional.tipo }}</span>
           </div>
         </div>
 
@@ -67,7 +70,6 @@ export default {
       pao: null,
       carne: null,
       opcionais: [],
-      status: "solicitado",
       msg: null,
     };
   },
@@ -83,6 +85,33 @@ export default {
       console.log(this.paes);
       console.log(this.carnes);
       console.log(this.opcionaisData);
+    },
+    async createBurger(e) {
+      e.preventDefault();
+
+      const data = {
+        nome: this.nome,
+        pao: this.pao,
+        carne: this.carne,
+        optionais: Array.from(this.opcionais),
+        status: "Solicitado",
+      };
+
+      const request = await fetch("http://localhost:3000/burgers",{
+        method:"POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+
+      const res = await request.json()
+
+
+      this.nome = "";
+      this.pao = "";
+      this.carne = "";
+      this.opcionais = [];
     },
   },
   mounted() {
