@@ -10,24 +10,35 @@
         <div>Ações:</div>
       </div>
     </div>
+
     <div id="burger-table-rows">
       <div class="burger-table-row" v-for="burger in burgers" :key="burger.id">
         <div class="order-number">{{ burger.id }}</div>
         <div>{{ burger.nome }}</div>
         <div>{{ burger.pao }}</div>
         <div>{{ burger.carne }}</div>
+
         <div>
           <ul>
-            <li v-for="(opcional, index) in burger.opcionais" :key="index">
-            {{ opcional }}
+            <li v-for="(opcional, index) in burger.optionais" :key="index">
+              {{ opcional }}
             </li>
           </ul>
         </div>
+
         <div>
           <select name="status" class="status">
-            <option>tipo</option>
+            <option>Selecione</option>
+            <option
+              v-for="item in status"
+              :key="item.id"
+              :selected="item.tipo === burger.status"
+            >
+              {{ item.tipo }}
+            </option>
           </select>
-          <button class="delete-btn">Cancelar</button>
+
+          <button class="delete-btn" @click="handleDelete(burger.id)" >Cancelar</button>
         </div>
       </div>
     </div>
@@ -37,18 +48,34 @@
 <script>
 export default {
   data() {
-    burgers: null;
-    burger_id: null;
-    status: [];
+    return {
+      burgers: null,
+      burger_id: null,
+      status: [],
+    };
   },
   methods: {
     async getPedidos() {
       const req = await fetch("http://localhost:3000/burgers");
-
       const data = await req.json();
-
       this.burgers = data;
+
+      //get status
+      this.getStatus();
     },
+    async getStatus() {
+      const req = await fetch("http://localhost:3000/status");
+      const data = await req.json();
+      this.status = data;
+    },
+
+    async handleDelete(id){
+      await fetch(`http://localhost:3000/burgers/${id}`, {
+        method: "DELETE"
+      })
+      this.getPedidos()
+    }
+
   },
   mounted() {
     this.getPedidos();
