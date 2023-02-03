@@ -78,6 +78,23 @@
     }
   ],
   "burgers": [
-    
+    {
+      "nome": "teste",
+      "pao": "Italiano Branco",
+      "carne": "Alcatra",
+      "optionais": [
+        "Bacon"
+      ],
+      "status": "Solicitado",
+      "id": 1
+    },
+    {
+      "nome": "Guilherme",
+      "pao": "Parmesão e Orégano",
+      "carne": "Maminha",
+      "optionais": [],
+      "status": "Solicitado",
+      "id": 2
+    }
   ]
 }
