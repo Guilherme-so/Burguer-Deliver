@@ -38,7 +38,9 @@
             </option>
           </select>
 
-          <button class="delete-btn" @click="handleDelete(burger.id)" >Cancelar</button>
+          <button class="delete-btn" @click="handleDelete(burger.id)">
+            Cancelar
+          </button>
         </div>
       </div>
     </div>
@@ -69,13 +71,12 @@ export default {
       this.status = data;
     },
 
-    async handleDelete(id){
+    async handleDelete(id) {
       await fetch(`http://localhost:3000/burgers/${id}`, {
-        method: "DELETE"
-      })
-      this.getPedidos()
-    }
-
+        method: "DELETE",
+      });
+      this.getPedidos();
+    },
   },
   mounted() {
     this.getPedidos();
