@@ -1,3 +1,4 @@
+
 <template>
   <header>
     <nav id="nav">
@@ -5,7 +6,10 @@
         ><img :src="logo" :alt="alt" id="logo"
       /></RouterLink>
       <RouterLink to="/">Home</RouterLink> |
-      <RouterLink to="/pedidos">Pedidos</RouterLink>
+      <RouterLink to="/pedidos">
+          Pedidos
+      </RouterLink>
+      <div class="pedido">{{ quantidade }}</div>
     </nav>
   </header>
 </template>
@@ -13,6 +17,21 @@
 <script>
 export default {
   props: ["logo", "alt"],
+  data(){
+    return {
+      quantidade: 0
+    }
+  },
+  methods: {
+    async getPedidos(){
+      const req = await fetch("http://localhost:3000/burgers")
+      const data = await req.json()
+      this.quantidade = data.length
+    }
+  },
+  mounted(){
+    this.getPedidos()
+  }
 };
 </script>
 
@@ -46,4 +65,17 @@ export default {
 #nav a:hover {
   color: #fff;
 }
+
+.pedido {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 4px;
+  background-color: #222;
+  border: 2px solid #FCBA03;
+  width: 30px;
+  height: 30px;
+  color: #fff;
+}
+
 </style>

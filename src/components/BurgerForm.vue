@@ -87,9 +87,6 @@ export default {
       this.carnes = data.carnes;
       this.opcionaisData = data.opcionais;
 
-      console.log(this.paes);
-      console.log(this.carnes);
-      console.log(this.opcionaisData);
     },
     async createBurger(e) {
       e.preventDefault();

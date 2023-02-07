@@ -10,6 +10,7 @@
     background-position: 0 -250px;
     height: 500px;
     background-size: cover;
+    background-repeat: no-repeat;
     display: flex;
     align-items: center;
 }
