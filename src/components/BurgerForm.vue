@@ -4,7 +4,7 @@ import Message from "./Message.vue";
 
 <template>
   <div>
-    <Message :msg="msg" v-show="msg" />
+    <Message :msg="msg" v-show="Object.keys(msg).length != 0" />
     <div>
       <form id="burger-form" @submit="createBurger">
         <div class="input-container">
@@ -75,7 +75,7 @@ export default {
       pao: null,
       carne: null,
       opcionais: [],
-      msg: null,
+      msg: {},
     };
   },
   methods: {
@@ -110,7 +110,10 @@ export default {
       const res = await request.json();
 
       //message
-      this.msg = "Seu pedido foi enviado com Sucesso...";
+      this.msg = {
+        mensagem: "Seu pedido foi enviado com Sucesso...",
+        status: "Criado"
+      }
 
       //clear Message
       setTimeout(() => {

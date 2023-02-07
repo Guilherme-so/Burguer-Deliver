@@ -1,5 +1,7 @@
 <template>
-  <div id="burger-table">
+  <Message :msg="msg" v-show="Object.keys(msg).length != 0" />
+
+  <div id="burger-table" v-if="burgers">
     <div>
       <div id="burger-table-heading">
         <div class="order-id">#:</div>
@@ -27,12 +29,17 @@
         </div>
 
         <div>
-          <select name="status" class="status">
+          <select
+            name="status"
+            class="status"
+            @change="updateStatus($event, burger.id)"
+          >
             <option>Selecione</option>
             <option
               v-for="item in status"
               :key="item.id"
               :selected="item.tipo === burger.status"
+              :value="item.tipo"
             >
               {{ item.tipo }}
             </option>
@@ -45,15 +52,22 @@
       </div>
     </div>
   </div>
+  <div v-else id="burger-table">
+    Sem Pedidos!
+  </div>
+
 </template>
 
 <script>
+import Message from "./Message.vue";
+
 export default {
   data() {
     return {
       burgers: null,
       burger_id: null,
       status: [],
+      msg: {},
     };
   },
   methods: {
@@ -61,7 +75,6 @@ export default {
       const req = await fetch("http://localhost:3000/burgers");
       const data = await req.json();
       this.burgers = data;
-
       //get status
       this.getStatus();
     },
@@ -70,17 +83,50 @@ export default {
       const data = await req.json();
       this.status = data;
     },
+    async updateStatus(event, id) {
+      const status = event.target.value;
+      const req = await fetch(`http://localhost:3000/burgers/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status }),
+      });
+      const data = await req.json();
 
+      // message
+      this.msg = {
+        mensagem: "Pedido atualizado com successo.",
+        status: "Atualizado",
+      };
+
+      //remover mensagem
+      setTimeout(() => {
+        this.msg = {};
+      }, 3000);
+    },
     async handleDelete(id) {
       await fetch(`http://localhost:3000/burgers/${id}`, {
         method: "DELETE",
       });
       this.getPedidos();
+
+      // message
+      this.msg = {
+        mensagem: "Pedido deletado com successo.",
+        status: "Deletado",
+      };
+
+      //remover mensagem
+      setTimeout(() => {
+        this.msg = {};
+      }, 3000);
     },
   },
   mounted() {
     this.getPedidos();
   },
+  components: { Message, Message },
 };
 </script>
 

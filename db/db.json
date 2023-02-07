@@ -66,7 +66,8 @@
   "status": [
     {
       "id": 1,
-      "tipo": "Solicitado"
+      "tipo": "Solicitado",
+      "status": "Em produção"
     },
     {
       "id": 2,
@@ -77,35 +78,5 @@
       "tipo": "Finalizado"
     }
   ],
-  "burgers": [
-    {
-      "nome": "Guilherme Silva Oliveira",
-      "pao": "Italiano Branco",
-      "carne": "Maminha",
-      "optionais": [
-        "Bacon"
-      ],
-      "status": "Solicitado",
-      "id": 1
-    },
-    {
-      "nome": "Guilherme",
-      "pao": "Parmesão e Orégano",
-      "carne": "Picanha",
-      "optionais": [
-        "Bacon",
-        "Cheddar"
-      ],
-      "status": "Solicitado",
-      "id": 2
-    },
-    {
-      "nome": "teste",
-      "pao": "Italiano Branco",
-      "carne": "Maminha",
-      "optionais": [],
-      "status": "Solicitado",
-      "id": 3
-    }
-  ]
+  "burgers": []
 }
